@@ -6,17 +6,19 @@ name: CI Staging
 on:
   # Triggers the workflow on push events but only for the staging branch
   push:
-    branches: [ staging ]
+    branches:
+      - staging
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
+  # This workflow contains a single job called "migrate"
+  migrate:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    # gives the job access to the secrets and protection settings scoped to the staging environment
     environment: staging
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -25,6 +27,12 @@ jobs:
       - uses: actions/checkout@v2
 
       # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, ${{ secrets.db_name }}
-
+      - name: Set up Flyway
+      - run: wget -qO- https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/7.7.1/flyway-commandline-7.7.1-linux-x64.tar.gz | tar xvz && sudo ln -s `pwd`/flyway-7.7.1/flyway /usr/local/bin
+      - run: |
+          .flyway -url ="jdbc:postgresql://${{secrets.DB_HOST}}:5432/${{secrets.DB_NAME}}" /
+          - user="${{secrets.DB_USER}}" /
+          - password="${{secrets.DB_PASS}}" /
+          - locations="filesystem:migrations" info /
+          migrate
+          
