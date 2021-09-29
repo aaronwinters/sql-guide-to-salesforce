@@ -34,7 +34,7 @@ jobs:
           && rm flyway-commandline-7.7.1.tar.gz
       - run: PATH=/flyway:$PATH
       - run: |
-          ./flyway -url ="jdbc:postgresql://${{secrets.DB_HOST}}:5432/${{secrets.DB_NAME}}" /
+          ./flyway -url="jdbc:postgresql://${{secrets.DB_HOST}}:5432/${{secrets.DB_NAME}}" /
           - user="${{secrets.DB_USER}}" /
           - password="${{secrets.DB_PASS}}" /
           - locations="filesystem:migrations" info /
