@@ -35,8 +35,8 @@ jobs:
       - run: PATH=/flyway:$PATH
       - run: |
           ./flyway -url="jdbc:postgresql://${{secrets.DB_HOST}}:5432/${{secrets.DB_NAME}}" \
-          - user="${{secrets.DB_USER}}" \
-          - password="${{secrets.DB_PASS}}" \
-          - locations="filesystem:migrations" info \
+          -user="${{secrets.DB_USER}}" \
+          -password="${{secrets.DB_PASS}}" \
+          -locations="filesystem:migrations" info \
           migrate
           
