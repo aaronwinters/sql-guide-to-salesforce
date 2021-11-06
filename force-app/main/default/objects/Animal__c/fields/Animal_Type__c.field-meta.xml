@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Animal_Type__c</fullName>
+    <description>Type of animal</description>
+    <externalId>false</externalId>
+    <label>Animal Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Cat</fullName>
+                <default>false</default>
+                <label>Cat</label>
+            </value>
+            <value>
+                <fullName>Dog</fullName>
+                <default>false</default>
+                <label>Dog</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
