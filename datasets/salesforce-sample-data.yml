@@ -31,7 +31,7 @@
         Shelter__c:
           reference: Account
       friends:
-        - object: Animal_Notes__c
+        - object: Animal_Note__c
           count: 2
           fields:
             Animal_Note_Date__c:
@@ -77,7 +77,7 @@
             Shelter__c:
               reference: Account
           friends:
-            - object: Animal_Notes__c
+            - object: Animal_Note__c
               count: 2
               fields:
                 Animal_Note_Date__c:
