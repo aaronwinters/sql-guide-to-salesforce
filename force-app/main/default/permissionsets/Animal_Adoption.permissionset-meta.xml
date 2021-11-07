@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <applicationVisibilities>
+        <application>Animal_Adoption</application>
+        <visible>true</visible>
+    </applicationVisibilities>
     <description>Permission set for animal adoption sample app.</description>
     <fieldPermissions>
         <editable>true</editable>
@@ -94,4 +98,8 @@
         <object>Contact</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <tabSettings>
+        <tab>Animal__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>
