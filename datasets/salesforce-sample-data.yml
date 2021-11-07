@@ -1,0 +1,90 @@
+# Snowfakery recipe that generates sample data for Animal Adoption Salesforce app
+
+# Creates 4 accounts, 4 animals and 8 animal notes
+# Creates 4 contacts (2 are related to animals)
+
+# Run this to generate data in a scratch org:
+# cci task run generate_and_load_from_yaml -o generator_yaml datasets/salesforce-sample-data.yml --org dev
+
+# Run this to generate records in an output JSON file (NOTE: update the org_name to the CCI org you are using)
+# snowfakery ./datasets/salesforce-sample-data.yml --output-format=json --output-file=foo.json --plugin-option org_name dev
+
+# create animal records not matched with owners
+- object: Account
+  count: 2
+  fields:
+    name: ${{fake.Company}} Shelter
+  friends:
+    - object: Animal__c
+      fields:
+        #Animal_Owner__c:
+        Birthdate__c: ${{fake.DateOfBirth}}
+        Animal_Type__c:
+          random_choice:
+            - Cat
+            - Dog
+        Gender__c:
+          random_choice:
+            - Female
+            - Male
+        Name: ${{fake.FirstName}}
+        Shelter__c:
+          reference: Account
+      friends:
+        - object: Animal_Notes__c
+          count: 2
+          fields:
+            Animal_Note_Date__c:
+              date_between:
+                start_date: -5d
+                end_date: today
+            Animal_Note_Detail__c: ${{fake.Paragraph(nb_sentences=5)}}
+            Animal__c:
+              reference: Animal__c
+            Name: ${{fake.Text(max_nb_chars=60)}}
+
+# create animal records matched with owners
+- object: Contact
+  count: 2
+  fields:
+    FirstName: ${{fake.FirstName}}
+    LastName: ${{fake.LastName}}
+    Email: ${{fake.Email}}
+    Phone: ${{fake.PhoneNumber}}
+    MailingStreet: ${{fake.StreetAddress}}
+    MailingCity: ${{fake.City}}
+    MailingState: ${{fake.State}}
+    MailingPostalCode: ${{fake.Postalcode}}
+  friends:
+    - object: Account
+      fields:
+        name: ${{fake.Company}} Shelter
+      friends:
+        - object: Animal__c
+          fields:
+            Animal_Owner__c:
+              reference: Contact
+            Birthdate__c: ${{fake.DateOfBirth}}
+            Animal_Type__c:
+              random_choice:
+                - Cat
+                - Dog
+            Gender__c:
+              random_choice:
+                - Female
+                - Male
+            Name: ${{fake.FirstName}}
+            Shelter__c:
+              reference: Account
+          friends:
+            - object: Animal_Notes__c
+              count: 2
+              fields:
+                Animal_Note_Date__c:
+                  date_between:
+                    start_date: -5d
+                    end_date: today
+                Animal_Note_Detail__c: ${{fake.Paragraph(nb_sentences=5)}}
+                Animal__c:
+                  reference: Animal__c
+                Name: ${{fake.Text(max_nb_chars=60)}}
