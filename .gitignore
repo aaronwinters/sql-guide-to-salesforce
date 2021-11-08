@@ -21,3 +21,6 @@ robot/sql-guide-to-salesforce/results/
 
 # Misc
 .DS_Store
+
+# Snowfakery tests
+foo.json
