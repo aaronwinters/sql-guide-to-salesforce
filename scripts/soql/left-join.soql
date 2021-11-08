@@ -1,0 +1,2 @@
+SELECT Animal_Type__c, Id, Name, Shelter__r.Name, Animal_Owner__r.FirstName, Animal_Owner__r.Email
+  FROM Animal__c

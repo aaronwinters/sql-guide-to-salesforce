@@ -1,0 +1,2 @@
+SELECT Animal_Owner__c, Animal_Type__c, Id, Name, Shelter__c, Animal_Owner__r.FirstName
+  FROM Animal__c WHERE Animal_Owner__c IN (SELECT Id FROM Contact)

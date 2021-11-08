@@ -1,0 +1,1 @@
+SELECT FirstName, LastName, Phone, Email, MailingState, (SELECT Animal_Type__c, Id, Name FROM Animals__r) FROM Contact
