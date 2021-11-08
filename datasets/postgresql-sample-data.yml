@@ -7,7 +7,7 @@
 # snowfakery ./datasets/postgresql-sample-data.yml --output-format=json --output-file=foo.json
 
 # Run this to generate a SQL file
-# snowfakery ./datasets/postgres-sample-data.yml --output-format=sql --output-file=scripts/sql/sample-data-insert.sql
+# snowfakery ./datasets/postgresql-sample-data.yml --output-format=sql --output-file=scripts/sql/sample-data-insert.sql
 
 # create contact/owner records not matched with aniamals
 - object: owners
@@ -30,7 +30,7 @@
   friends:
     - object: animals
       fields:
-        birthdate: ${{fake.DateOfBirth}}
+        animal_name: ${{fake.FirstName}}
         animal_type:
           random_choice:
             - Cat
@@ -39,21 +39,21 @@
           random_choice:
             - Female
             - Male
-        animal_name: ${{fake.FirstName}}
+        birthdate: ${{fake.DateOfBirth}}
         shelter:
           reference: organizations
       friends:
         - object: animal_notes
           count: 2
           fields:
+            animal_note_summary: ${{fake.Text(max_nb_chars=60)}}
+            animal_note_detail: ${{fake.Paragraph(nb_sentences=5)}}
             animal_note_date:
               date_between:
                 start_date: -5d
                 end_date: today
-            animal_note_detail: ${{fake.Paragraph(nb_sentences=5)}}
             animal:
               reference: animals
-            animal_note_summary: ${{fake.Text(max_nb_chars=60)}}
 
 # create animal records matched with owners
 - object: owners
@@ -68,15 +68,13 @@
     mailing_state: ${{fake.State}}
     mailing_postal_code: ${{fake.Postalcode}}
   friends:
-    - object: owners
+    - object: organizations
       fields:
         name: ${{fake.Company}} Shelter
       friends:
         - object: animals
           fields:
-            animal_owner:
-              reference: owners
-            birthdate: ${{fake.DateOfBirth}}
+            animal_name: ${{fake.FirstName}}
             animal_type:
               random_choice:
                 - Cat
@@ -85,18 +83,20 @@
               random_choice:
                 - Female
                 - Male
-            animal_name: ${{fake.FirstName}}
+            birthdate: ${{fake.DateOfBirth}}
             shelter:
               reference: organizations
+            owner_id:
+              reference: owners
           friends:
             - object: animal_notes
               count: 2
               fields:
+                animal_note_summary: ${{fake.Text(max_nb_chars=60)}}
+                animal_note_detail: ${{fake.Paragraph(nb_sentences=5)}}
                 animal_note_date:
                   date_between:
                     start_date: -5d
                     end_date: today
-                animal_note_detail: ${{fake.Paragraph(nb_sentences=5)}}
                 animal:
                   reference: animals
-                animal_note_summary: ${{fake.Text(max_nb_chars=60)}}
