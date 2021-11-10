@@ -18,6 +18,7 @@ robot/sql-guide-to-salesforce/results/
 .idea
 .project
 .settings
+.azuredatastudio
 
 # Misc
 .DS_Store
